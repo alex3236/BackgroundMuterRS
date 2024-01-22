@@ -1,6 +1,6 @@
 extern crate winapi;
 
-use crate::{systray, config, audio};
+use crate::{audio, config, systray};
 use fltk::app::event_clicks;
 use fltk::button::CheckButton;
 use fltk::enums::Event;
@@ -8,7 +8,7 @@ use fltk::image::IcoImage;
 use fltk::{app, prelude::*, *};
 use fltk_theme::WidgetTheme;
 
-fn reload_channels (t: &mut tree::Tree) {
+fn reload_channels(t: &mut tree::Tree) {
     t.clear();
     t.add("Active sound channels");
     t.add("Listed sound channels");
@@ -59,25 +59,28 @@ pub fn init() {
         if event_clicks() {
             if let Some(selected) = t.first_selected_item() {
                 if let Some(parent) = selected.parent() {
-                    if let Some(label) = parent.label() {
-                        if parent.is_root() {
-                            return false;
-                        }
-                        if label == "Listed sound channels" {
-                            config::remove(selected.label().unwrap());
-                        } else {
-                            config::append(selected.label().unwrap());
-                        }
-                        reload_channels(t);
-                        return true;
+                    if parent.is_root() {
+                        return false;
                     }
+                    let parent_label = &mut parent.label().unwrap();
+                    let label = &mut selected.label().unwrap().to_string();
+                    if parent_label == "Listed sound channels" {
+                        config::remove(label.to_string());
+                        audio::set_session_mute(&label, false);
+                    } else {
+                        config::append(label.to_string());
+                        if crate::get_foreground_name().unwrap_or_default() != *label {
+                            audio::set_session_mute(&selected.label().unwrap(), true);
+                        }
+                    }
+                    reload_channels(t);
+                    return true;
                 }
             }
             println!("Double click");
         }
         return false;
     });
-    
 
     // list_tree.set_callback(move |t| {
     //     if let Some(item) = t.first_selected_item() {
