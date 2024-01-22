@@ -2,7 +2,7 @@ extern crate winapi;
 
 use crate::{audio, config, systray};
 use fltk::app::event_clicks;
-use fltk::button::CheckButton;
+use fltk::button::{Button, CheckButton};
 use fltk::enums::Event;
 use fltk::image::IcoImage;
 use fltk::{app, prelude::*, *};
@@ -40,18 +40,6 @@ pub fn init() {
     let mut tree = tree::Tree::default().with_size(390, 300);
     tree.set_show_collapse(false);
     tree.set_show_root(false);
-
-    let mut exclude_btn = CheckButton::default().with_pos(10, 310).with_size(150, 10);
-    exclude_btn.set_label("Exclude explorer");
-    exclude_btn.set_checked(config::exclude_explorer());
-    exclude_btn.set_callback(|b| {
-        config::set_exclude_explorer(b.is_checked());
-    });
-
-    reload_channels(&mut tree);
-    // reload_listed(&mut list_tree);
-
-    // let mut c_l = list_tree.clone();
     tree.handle(move |t, ev| {
         if ev != Event::Push {
             return false;
@@ -81,6 +69,25 @@ pub fn init() {
         }
         return false;
     });
+
+    let mut reload_btn = Button::default().with_pos(10, 310).with_size(50, 20);
+    reload_btn.set_label("Reload");
+    reload_btn.set_callback(move |_| {
+        reload_channels(&mut tree);
+    });
+
+    let mut exclude_btn = CheckButton::default().with_size(110, 20).right_of(&reload_btn, 10);
+    exclude_btn.set_label("Exclude explorer");
+    exclude_btn.set_checked(config::exclude_explorer());
+    exclude_btn.set_callback(|b| {
+        config::set_exclude_explorer(b.is_checked());
+    });
+
+    reload_btn.do_callback();
+    // reload_listed(&mut list_tree);
+
+    // let mut c_l = list_tree.clone();
+    
 
     // list_tree.set_callback(move |t| {
     //     if let Some(item) = t.first_selected_item() {

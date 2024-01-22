@@ -1,4 +1,4 @@
-#![windows_subsystem = "windows"]
+// #![windows_subsystem = "windows"]
 
 extern crate winapi;
 use chrono::Local;
@@ -118,9 +118,9 @@ pub fn main() {
                     if config::applications().contains(&foreground) {
                         audio::set_session_mute(&foreground, false);
                     }
+                    *last_foreground = foreground;
                 }
             }
-            *last_foreground = foreground;
         }
     };
 
