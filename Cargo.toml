@@ -1,0 +1,28 @@
+[package]
+name = "bgmuter"
+version = "0.1.0"
+edition = "2021"
+build = "build.rs"
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+winapi = { version = "0.3", features = ["winuser", "processthreadsapi", "winnt", "psapi"] }
+windows-volume-control = "0.1.1"
+win_event_hook = "0.3.0"
+
+rust-embed="8.2.0"
+
+chrono = "0.4"
+
+fltk = { version = "^1.4", features = ["fltk-bundled"] }
+fltk-theme = "0.7"
+native-windows-gui = { version = "1.0.10", default-features=false, features=["tray-notification", "message-window", "menu", "cursor", "image-decoder"] }
+
+serde = "1.0"
+serde_derive = "1.0"
+toml = "0.8.8"
+
+lazy_static = "1.4"
+
+[build-dependencies]
+winres = "0.1.12"
