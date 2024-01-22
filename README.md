@@ -1,13 +1,18 @@
 # BackgroundMuterRS
 
-Mute background games and applications!
+Mute background games and applications! (Windows only)
 
-## Configuration
+This my first try in Rust, so there's a high probability that there will be quite a few mistakes.
 
-### Exclude Explorer
+## Usage
 
-If foreground app switched to explorer, do not execute the mute.
+A tray icon will be shown in the system tray when you execute. Click on it to open the main window.
+
+> [!NOTE]
+> The memory usage will be less until you open the UI for the first time. I tried freeing those memory after closing the window, but it seemed to cause a memory leak, so I gave up for now.
+
+Exclude explorer: When checked, File Explorer will not be recognized as a foreground app.
 
 ## TODO
 
-- [ ] Add whitelist mode
+- [ ] Whitelist mode
