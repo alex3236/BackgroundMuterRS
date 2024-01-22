@@ -16,7 +16,7 @@ impl Default for Config {
     fn default() -> Self {
         Config {
             whitelist: false,
-            exclude_explorer: false,
+            exclude_explorer: true,
             applications: Vec::from(["thorium".to_string()]),
         }
     }
