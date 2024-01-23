@@ -28,8 +28,6 @@ lazy_static! {
     static ref CONFIG: Mutex<Config> = Mutex::new(load());
 }
 
-// static mut CONFIG: Option<Config> = None;
-
 pub fn get() -> MutexGuard<'static, Config> {
     return CONFIG.lock().unwrap();
 }
@@ -70,14 +68,11 @@ pub fn load() -> Config {
 
     match File::open(file_path) {
         Ok(mut file) => {
-            // Read the file content into a string
             let mut toml_str = String::new();
             if file.read_to_string(&mut toml_str).is_err() {
-                // Handle read error and return default value
                 return Config::default();
             }
 
-            // Parse the TOML string into a Config struct
             match toml::from_str(&toml_str) {
                 Ok(parsed_data) => parsed_data,
                 Err(_) => Config::default(),
