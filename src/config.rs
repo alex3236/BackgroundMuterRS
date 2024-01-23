@@ -14,11 +14,13 @@ pub struct Config {
 
 impl Default for Config {
     fn default() -> Self {
-        Config {
+        let c = Config {
             whitelist: false,
             exclude_explorer: true,
-            applications: Vec::from(["thorium".to_string()]),
-        }
+            applications: Vec::new(),
+        };
+        _save(&c);
+        return c;
     }
 }
 
@@ -85,9 +87,12 @@ pub fn load() -> Config {
     }
 }
 
-pub fn save() {
-    let cfg = get();
-    let toml_str = toml::to_string(&*cfg).unwrap();
+fn _save(cfg: &Config) {
+    let toml_str = toml::to_string(cfg).unwrap();
     let mut file = File::create("config.toml").unwrap();
     file.write_all(toml_str.as_bytes()).unwrap();
+}
+
+pub fn save() {
+    _save(&*get());
 }
