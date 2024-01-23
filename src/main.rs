@@ -83,7 +83,6 @@ fn initialize_bg_mute() {
     let foreground = get_foreground_name().unwrap_or("".to_string());
     for ele in applications {
         if ele.to_string() != foreground {
-            // println!("{} muted", ele);
             audio::set_session_mute(&ele, true);
         }
     }
@@ -128,10 +127,4 @@ pub fn main() {
     let _hook = win_event_hook::WinEventHook::install(config, handler).unwrap();
     initialize_bg_mute();
     ui::init();
-    // config_window::init_tray();
-
-    // loop{}
-    // loop {
-    //     thread::sleep(Duration::from_millis(4000));
-    // }
 }

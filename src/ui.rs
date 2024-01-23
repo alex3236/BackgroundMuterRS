@@ -84,29 +84,14 @@ pub fn init() {
     });
 
     reload_btn.do_callback();
-    // reload_listed(&mut list_tree);
-
-    // let mut c_l = list_tree.clone();
-    
-
-    // list_tree.set_callback(move |t| {
-    //     if let Some(item) = t.first_selected_item() {
-    //         println!("{} selected", item.label().unwrap());
-    //     }
-    // });
-
-    // win.show();
-    // win.platform_hide();
 
     // system tray logic
     win.set_callback(|w| {
         // We intercept the closing of the window here
         w.platform_hide();
-        // w.hide();
     });
 
     win.end();
-    // win.show();
 
     use crate::systray::NativeUi;
     systray::init().expect("Failed to init Native Windows GUI");
