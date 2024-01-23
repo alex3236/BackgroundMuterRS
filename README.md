@@ -2,7 +2,7 @@
 
 Mute background games and applications! (Windows only)
 
-This my first try in Rust, so there's a high probability that there will be quite a few mistakes.
+This my first try in Rust, so there's a high probability that there will be quite a few mistakes. It works on my machine though. :)
 
 ## Usage
 

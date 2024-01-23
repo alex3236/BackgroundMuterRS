@@ -1,3 +1,5 @@
+// <https://github.com/fltk-rs/demos/blob/master/systray/>
+
 extern crate native_windows_gui as nwg;
 pub use nwg::*;
 
